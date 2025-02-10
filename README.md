@@ -1,2 +1,2 @@
 # My-game
-A simple repository for a game
+Répertoire contenant le projet de mon premier jeu uniquement en C++ avec SFML
