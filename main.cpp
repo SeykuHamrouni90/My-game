@@ -1,28 +1,28 @@
+//Bien penser à tout inclure les fichiers .cpp
 #include "main.hpp"
-using namespace sf;
-using namespace std;
-
-//Prototypes des fonctions
-void IntputsHandler(Event event, RenderWindow& window);
-void LoadFont();
-void SetText (Text &txt, String str);
+#include "input.cpp"
 
 //Variables
+//Fenêtre du Jeu
+RenderWindow window;
+//Gestion des inputs
+Input input;
+//Création de la Font
 Font font;
+//Création du Texte
+Text txt;
 
 
 int main(){
 
-    RenderWindow window(VideoMode(WIN_WIDTH,WIN_HEIGHT,32), "Mon jeu");
+    window.create(VideoMode(WIN_WIDTH,WIN_HEIGHT,32), "Mon jeu");
     //Activation du Vsync
     window.setVerticalSyncEnabled(true);
 
     //Chargement font (police)
      LoadFont();
 
-     //création d'un texte
-     Text txt;
-    SetText(txt, "Mon Jeu");
+    SetText(txt, "Coucou");
 
     //boucle qui tourne tant que la fenêtre est ouverte
     while (window.isOpen()){
@@ -30,7 +30,7 @@ int main(){
         Event event; // Variable pour gérer l'événement
         //On boucle sur les événements
         while(window.pollEvent(event)){
-            IntputsHandler(event, window);
+            input.IntputsHandler(event, window);
         }
         //Couleur de la fenêtre en noir
         window.clear(Color::Black);
@@ -47,18 +47,6 @@ int main(){
     return 0;
 }
 
-
-//Gestion des events et inputs
-void IntputsHandler(Event event, RenderWindow& window){
-    //Fermer la fenêtre si clic sur croix
-            if(event.type == Event::Closed){
-                
-                window.close();
-                }
-}
-
-
-
 //Chargement de la police d'écriture
 void LoadFont(){
     //On vérifie que la police d'écriture est bien chargée
@@ -68,9 +56,16 @@ void LoadFont(){
     }
 }
 
+//Mise en place du texte
 void SetText (Text &txt, String str){
      txt.setFont(font);
      txt.setString(str);
      txt.setCharacterSize(26);
      txt.setFillColor(Color::Cyan);
 }
+
+ /*Gestion inputs (Clavier Souris)
+    //Cette méthode est pour les event plus ponctuels
+    if (event.key.code == Keyboard::Escape){
+        window.close();
+    }*/
