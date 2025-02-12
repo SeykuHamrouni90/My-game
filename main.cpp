@@ -38,6 +38,9 @@ int main(){
     rectangle_shape.setFillColor(Color(200,0,100,100));
     rectangle_shape.setSize(Vector2f(200.f,100.f));
     rectangle_shape.setPosition(200,300);
+
+    CircleShape triangle(80.f, 3);
+    triangle.setFillColor(Color(100,0,0));
     
 
     //boucle qui tourne tant que la fenêtre est ouverte
@@ -58,6 +61,7 @@ int main(){
         window.draw(txt);
         window.draw(circle_shape);
         window.draw(rectangle_shape);
+        window.draw(triangle);
         
         
         //Afficher à l'écran
