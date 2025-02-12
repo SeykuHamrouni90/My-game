@@ -13,6 +13,7 @@ using namespace std;
 
 void LoadFont();
 void SetText (Text &txt, String str);
+void CheckBtn();
 
 
 

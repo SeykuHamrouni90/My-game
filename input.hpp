@@ -6,7 +6,7 @@
 using namespace sf;
 
 class Input{
-    struct Button {bool left, right, up, down, attack, escape;};
+    struct Button {bool left, right, up, down, attack, escape, exit;};
 
     public:
         //Prototype du constructeur

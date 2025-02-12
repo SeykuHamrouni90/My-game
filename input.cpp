@@ -4,7 +4,7 @@
 
 //Constructeur
 Input::Input(){
-    button.left = button.right = button.up = button.down = button.attack = false;
+    button.left = button.right = button.up = button.down = button.attack = button.exit = false;
 }
 
 //Fonction qui accède à button (structure) et donne l'info private
@@ -18,7 +18,6 @@ void Input::IntputsHandler(Event event, RenderWindow& window){
     if(event.type == Event::Closed){
         window.close();
     }
-
 
     if (event.type == Event::KeyPressed){
         
@@ -35,6 +34,9 @@ void Input::IntputsHandler(Event event, RenderWindow& window){
                 break;
             case Keyboard::Down:
                 button.down = true;
+                break;
+            case Keyboard::Escape:
+                button.exit = true;
                 break;
             default:
                 break;
@@ -55,6 +57,9 @@ void Input::IntputsHandler(Event event, RenderWindow& window){
                 break;
             case Keyboard::Down:
                 button.down = false;
+                break;
+            case Keyboard::Escape:
+                button.exit = false;
                 break;
             default:
                 break;
