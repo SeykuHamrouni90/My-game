@@ -3,45 +3,41 @@
 #include "input.cpp"
 
 //Variables
-//Fenêtre du Jeu
 RenderWindow window;
-//Gestion des inputs
 Input input;
-//Création de la Font
 Font font;
-//Création du Texte
 Text txt;
-//Exemple de valeur position axe X
-int posX = 0;
+Texture texture;
+Sprite perso;
+float posX = 0;
+int RecX = 600;
+int rayon = 75;
+int Largeur = 75;
+int CircleHitbox, RectangleHitbox;
+
 //Conversion du chiffre en string
 char temp [256];
+CircleShape circle_shape(rayon);
+RectangleShape rectangle(Vector2f(Largeur, 160));
 
 
 int main(){
 
-    window.create(VideoMode(WIN_WIDTH,WIN_HEIGHT,32), "Mon jeu");
+    //Options de la fenêtre
+    ContextSettings options;
+    options.antialiasingLevel = 4;
+    window.create(VideoMode(WIN_WIDTH,WIN_HEIGHT,32), "Mon jeu", Style::Default, options);
     
     //Activation du Vsync
     window.setVerticalSyncEnabled(true);
 
     //Chargement font (police)
-     LoadFont();
-
+    LoadTexture();
+    LoadFont();
     SetText(txt, "Coucou");
-
-    //Préparation des primitives
-    CircleShape circle_shape(75) ;
-    circle_shape.setFillColor(Color(200,200,0));
-    circle_shape.setOutlineColor(Color::Red);
-    circle_shape.setOutlineThickness(5);
-    RectangleShape rectangle_shape(Vector2f(120.f,50.f));
-    rectangle_shape.setFillColor(Color(200,0,100,100));
-    rectangle_shape.setSize(Vector2f(200.f,100.f));
-    rectangle_shape.setPosition(200,300);
-
-    CircleShape triangle(80.f, 3);
-    triangle.setFillColor(Color(100,0,0));
     
+    //Setup des diverses formes
+    PrimitivePreparer();
 
     //boucle qui tourne tant que la fenêtre est ouverte
     while (window.isOpen()){
@@ -52,23 +48,35 @@ int main(){
         while(window.pollEvent(event)){
             input.IntputsHandler(event, window);
             CheckBtn();
-            circle_shape.setPosition(posX,80);
+            circle_shape.setPosition(posX,60);
         }
         //Couleur de la fenêtre en noir
         window.clear(Color::Black);
 
         //On dessine entre le window.clear et le window.display
-        window.draw(txt);
-        window.draw(circle_shape);
-        window.draw(rectangle_shape);
-        window.draw(triangle);
-        
-        
+            Draw();
+
         //Afficher à l'écran
         window.display();
 
+        CircleHitbox = posX + rayon;
+        RectangleHitbox= RecX - Largeur;
+        
+        if(CircleHitbox >RectangleHitbox){
+            posX = (RecX - Largeur - rayon); 
+        }
+
     }
     return 0;
+}
+
+void LoadTexture(){
+    texture.loadFromFile("res/textures/sans.png");
+    if(!texture.loadFromFile("res/textures/sans.png")){
+        //Si erreur
+        cout << "Erreur Chargement de l'image\n";
+    }
+    perso.setTexture(texture);
 }
 
 //Chargement de la police d'écriture
@@ -86,39 +94,51 @@ void SetText (Text &txt, String str){
      txt.setString(str);
      txt.setCharacterSize(26);
      txt.setFillColor(Color::White);
+     txt.setPosition(360,10);
 }
 
 //Check du bouton appuyé et éxécution de l'instruction correspondante
 void CheckBtn(){
     if (input.GetKey().left == true){
-        SetText(txt, temp);
-        posX -= 20;
-        sprintf(temp, "%d", posX);
+        posX -= 10;
     }
-    if (input.GetKey().right == true){
-        SetText(txt, temp);
-        posX += 20;
-        sprintf(temp, "%d", posX);
+    if (input.GetKey().right == true && CircleHitbox < RectangleHitbox ){
+        posX += 10;
     }
     if (input.GetKey().down == true){
-        SetText(txt, "Down");
+        
     }
     if (input.GetKey().up == true){
-        SetText(txt, "Up");
+        
     }
     if (input.GetKey().attack == true){
-        SetText(txt, "Attack");
+    
     }
     if(input.GetKey().exit == true){
         window.close();
     }
 }
 
+void Draw(){
+    window.draw(txt);
+    window.draw(circle_shape);
+    window.draw(rectangle);
+    window.draw(perso);
+    }
 
+void PrimitivePreparer(){
+        //Préparation des primitives
+    circle_shape.setFillColor(Color::Magenta);
+    rectangle.setFillColor(Color::Green);
+    rectangle.setPosition(RecX,50);
+    
+}
 
  /*Gestion inputs (Clavier Souris)
 
     //Cette méthode est pour les event plus ponctuels
     if (event.key.code == Keyboard::Escape){
         window.close();
-    }*/
+    }
+    Pour écrire une valeur numérique : sprintf(temp, "%d", nom_de_la_variable);
+    mettre un %f pour les floats*/
