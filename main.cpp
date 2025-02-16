@@ -4,7 +4,7 @@
 
 //Variables
 RenderWindow window;
-Input input
+Input input;
 Font font;
 Text txt;
 Texture texture;
@@ -12,14 +12,13 @@ Sprite perso;
 IntRect rect(0,0,32,32);
 float posX = 0;
 int RecX = 600;
-int rayon = 75;
 int Largeur = 75;
-int CircleHitbox, RectangleHitbox;
+int RectangleHitbox;
 
 //Conversion du chiffre en string
 char temp [256];
-CircleShape circle_shape(rayon);
 RectangleShape rectangle(Vector2f(Largeur, 160));
+RectangleShape hitbox(Vector2f(100, 160));
 
 
 int main(){
@@ -49,7 +48,8 @@ int main(){
         while(window.pollEvent(event)){
             input.IntputsHandler(event, window);
             CheckBtn();
-            circle_shape.setPosition(posX,60);
+            perso.setPosition(posX, 60);
+            hitbox.setPosition(posX+30, 60);
         }
         //Couleur de la fenêtre en noir
         window.clear(Color::Black);
@@ -60,25 +60,25 @@ int main(){
         //Afficher à l'écran
         window.display();
 
-        CircleHitbox = posX + rayon;
         RectangleHitbox= RecX - Largeur;
         
-        if(CircleHitbox >RectangleHitbox){
+        /*if(CircleHitbox >RectangleHitbox){
             posX = (RecX - Largeur - rayon); 
-        }
+        }*/
 
     }
     return 0;
 }
 
 void LoadTexture(){
-    texture.loadFromFile("res/textures/");
-    if(!texture.loadFromFile("res/textures/sans.png")){
+    texture.loadFromFile("res/textures/Idle_Sprite.png");
+    if(!texture.loadFromFile("res/textures/Idle_Sprite.png")){
         //Si erreur
         cout << "Erreur Chargement de l'image\n";
     }
     perso.setTexture(texture);
     perso.setTextureRect(rect);
+    perso.scale(5.0f, 5.0f);
 }
 
 //Chargement de la police d'écriture
@@ -104,7 +104,7 @@ void CheckBtn(){
     if (input.GetKey().left == true){
         posX -= 10;
     }
-    if (input.GetKey().right == true && CircleHitbox < RectangleHitbox ){
+    if (input.GetKey().right == true ){
         posX += 10;
     }
     if (input.GetKey().down == true){
@@ -123,14 +123,13 @@ void CheckBtn(){
 
 void Draw(){
     window.draw(txt);
-    window.draw(circle_shape);
     window.draw(rectangle);
+    window.draw(hitbox);
     window.draw(perso);
     }
 
 void PrimitivePreparer(){
-        //Préparation des primitives
-    circle_shape.setFillColor(Color::Magenta);
+        //Préparation des primitive
     rectangle.setFillColor(Color::Green);
     rectangle.setPosition(RecX,50);
     
