@@ -4,8 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/**",
-                "/usr/include/**"
+                "Dependencies**"
             ],
             "defines": [],
             "cStandard": "c17",

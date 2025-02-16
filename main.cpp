@@ -4,11 +4,12 @@
 
 //Variables
 RenderWindow window;
-Input input;
+Input input
 Font font;
 Text txt;
 Texture texture;
 Sprite perso;
+IntRect rect(0,0,32,32);
 float posX = 0;
 int RecX = 600;
 int rayon = 75;
@@ -71,12 +72,13 @@ int main(){
 }
 
 void LoadTexture(){
-    texture.loadFromFile("res/textures/sans.png");
+    texture.loadFromFile("res/textures/");
     if(!texture.loadFromFile("res/textures/sans.png")){
         //Si erreur
         cout << "Erreur Chargement de l'image\n";
     }
     perso.setTexture(texture);
+    perso.setTextureRect(rect);
 }
 
 //Chargement de la police d'écriture
