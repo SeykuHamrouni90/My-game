@@ -4,8 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "Dependencies**",
-                "/usr/include**"
+                "Dependencies/SFML/**"
             ],
             "defines": [],
             "cStandard": "c17",
