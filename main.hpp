@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include <Dependencies/SFML/Graphics.hpp>
 #include "input.hpp"
 
 //exécuter le code : g++ main.cpp -o main -lsfml-graphics -lsfml-window -lsfml-system
