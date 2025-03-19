@@ -11,14 +11,13 @@ Texture texture;
 Sprite perso;
 IntRect rect(0,0,32,32);
 float posX = 0;
-int RecX = 600;
-int Largeur = 75;
-int RectangleHitbox;
+float posY = 350;
+
 
 //Conversion du chiffre en string
 char temp [256];
-RectangleShape rectangle(Vector2f(Largeur, 160));
-RectangleShape hitbox(Vector2f(100, 160));
+
+RectangleShape rectangle(Vector2f(800, 100));
 
 
 int main(){
@@ -48,23 +47,16 @@ int main(){
         while(window.pollEvent(event)){
             input.IntputsHandler(event, window);
             CheckBtn();
-            perso.setPosition(posX, 60);
-            hitbox.setPosition(posX+30, 60);
+            perso.setPosition(posX, posY);
         }
         //Couleur de la fenêtre en noir
         window.clear(Color::Black);
 
         //On dessine entre le window.clear et le window.display
-            Draw();
+        Draw();
 
         //Afficher à l'écran
         window.display();
-
-        RectangleHitbox= RecX - Largeur;
-        
-        /*if(CircleHitbox >RectangleHitbox){
-            posX = (RecX - Largeur - rayon); 
-        }*/
 
     }
     return 0;
@@ -108,10 +100,10 @@ void CheckBtn(){
         posX += 10;
     }
     if (input.GetKey().down == true){
-        
+        posY += 10;
     }
     if (input.GetKey().up == true){
-        
+        posY -= 10;
     }
     if (input.GetKey().attack == true){
     
@@ -123,16 +115,14 @@ void CheckBtn(){
 
 void Draw(){
     window.draw(txt);
-    window.draw(rectangle);
-    window.draw(hitbox);
     window.draw(perso);
+    window.draw(rectangle);
     }
 
 void PrimitivePreparer(){
-        //Préparation des primitive
-    rectangle.setFillColor(Color::Green);
-    rectangle.setPosition(RecX,50);
-    
+        //Préparation des primitive (on fera ici les plateformes et divers décors)
+    rectangle.setFillColor(Color::White);
+    rectangle.setPosition(0,500);
 }
 
  /*Gestion inputs (Clavier Souris)
