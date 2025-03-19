@@ -2,7 +2,7 @@
 #define INPUT_H
 
 
-#include <Dependencies/SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 using namespace sf;
 
 class Input{
